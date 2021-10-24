@@ -1,11 +1,9 @@
 package ru.dataart.academy.java;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -50,7 +48,6 @@ public class Calculator {
 
                 while (zin.read(bytes, 0, bytes.length) != -1) {
                     temp.append(new String(bytes, Charset.defaultCharset()));
-                    System.out.println(temp);
 
                 }
 
@@ -73,8 +70,35 @@ public class Calculator {
      */
 
     public Integer getMaxWordLength(String zipFilePath) {
-        //Task implementation
-        return 0;
+        ArrayList<StringBuilder> strings = new ArrayList<>(getStringArrListFromZip(zipFilePath));
+
+        int maxLengthOfWrd = 0;
+        int tmp = 0;
+
+        for (StringBuilder str : strings) {
+            for (int i = 0; i < str.length(); i++) {
+
+                char chTmp = str.charAt(i);
+
+                if (chTmp != ' ' && chTmp != '\n' && chTmp != '\r') {
+                    tmp++;
+
+                } else {
+                    if (tmp > maxLengthOfWrd) {
+                        maxLengthOfWrd = tmp;
+                    }
+
+                    tmp = 0;
+                }
+            }
+            if (tmp > maxLengthOfWrd) {
+                maxLengthOfWrd = tmp;
+            }
+            tmp = 0;
+
+
+        }
+        return maxLengthOfWrd;
     }
 
 }
